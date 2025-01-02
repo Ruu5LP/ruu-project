@@ -1,8 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import TopScreen from "@/TopScreen/TopScreen";
 
-const App: React.FC = () => {
-    return <h1>Hello, React + TypeScript + Laravel + Vite!</h1>;
+export default function App() {
+    return(
+        <>
+            <TopScreen />
+        </>
+    );
 };
 
 const rootElement = document.getElementById('app');
