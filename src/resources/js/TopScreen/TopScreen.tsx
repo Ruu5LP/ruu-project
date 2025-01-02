@@ -1,21 +1,22 @@
-import React from "react";
+import React, {useState} from "react";
 
-export default function TopScreen() {
+interface TopScreenProps {
+    onClick: () => void;
+}
+export default function TopScreen({ onClick }: TopScreenProps) {
+    const [isFadingOut, setIsFadingOut] = useState(false);
+
     const containerStyle = {
         display: "flex",
         flexDirection: "column" as const,
         alignItems: "center",
         justifyContent: "center",
         height: "100vh",
-        backgroundImage: "url('/path/to/background.jpg')",
+        backgroundImage: "url('/images/66081447_p0.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
-    };
-
-    const titleStyle = {
-        fontSize: "3rem",
-        color: "#ffffff",
-        marginBottom: "20px",
+        transition: "opacity 2s", // Smooth opacity transition
+        opacity: isFadingOut ? 0 : 1, // Fading logic based on state
     };
 
     const buttonStyle = {
@@ -30,13 +31,25 @@ export default function TopScreen() {
         margin: "10px 0",
     };
 
+    const handleStartGameClick = () => {
+        setIsFadingOut(true);
+        setTimeout(() => {
+            onClick(); // Switch to the next screen after fade-out
+        }, 2000); // Wait for the fade-out to finish before executing onClick
+    };
+
     return (
         <div style={containerStyle}>
-            <h1 style={titleStyle}>My Awesome Game</h1>
+            <img
+                src="/images/001-removebg-preview.png"
+                alt="Collection King"
+                style={{width: "auto", height: "400px", marginBottom: "20px"}}
+            />
             <button
                 style={buttonStyle}
                 onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#0056b3")}
                 onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#007BFF")}
+                onClick={handleStartGameClick}
             >
                 Start Game
             </button>

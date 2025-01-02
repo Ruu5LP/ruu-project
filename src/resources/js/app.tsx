@@ -1,11 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import TopScreen from "@/TopScreen/TopScreen";
+import GameScreen from "@/GameScreen/GameScreen";
 
 export default function App() {
+
+    const [isTop, setIsTop] = useState(true);
+
+    const startButton = () => {
+        setIsTop(false);
+    }
+
     return(
         <>
-            <TopScreen />
+            { isTop ?  <TopScreen onClick={ startButton } /> : <GameScreen /> }
         </>
     );
 };
