@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import TopScreen from "@/TopScreen/TopScreen";
 import GameScreen from "@/GameScreen/GameScreen";
+import MainFrame from "@/Frame/MainFrame";
 
 export default function App() {
 
@@ -12,9 +13,9 @@ export default function App() {
     }
 
     return(
-        <>
+        <MainFrame onBack={ () => {} }>
             { isTop ?  <TopScreen onClick={ startButton } /> : <GameScreen /> }
-        </>
+        </MainFrame>
     );
 };
 

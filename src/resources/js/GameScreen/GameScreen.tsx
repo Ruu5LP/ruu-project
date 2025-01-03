@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
+import CardDeckEditor from "@/CardDeckEditor/CardDeckEditor";
 
 export default function GameScreen() {
+    const [isDeckEditor, setIsDeckEditor] = useState(false);
+
+    const deckEditorButton = () => {
+        setIsDeckEditor(true);
+    };
+
     useEffect(() => {
         const audio = new Audio("/music/Whispers_of_the_woods.mp3");
         audio.volume = 0.6;
@@ -95,28 +102,36 @@ export default function GameScreen() {
     };
 
     return (
-        <div style={styles.gameMenuContainer}>
-            <ul style={styles.buttonSet}>
-                {["ストーリー", "デッキ", "ガチャ", "設定", "ゲーム終了"].map((label, index) => (
-                    <li key={index} style={{ flex: "1" }}>
-                        <button
-                            style={{
-                                ...styles.button,
-                                ...(activeDescription === descriptions[label] ? styles.buttonHover : {}),
-                            }}
-                            onMouseOver={() => handleMouseOver(label)}
-                            onMouseOut={handleMouseOut}
-                            onMouseDown={(e) => (e.target.style.transform = styles.buttonHover.transform)}
-                            onMouseUp={(e) => (e.target.style.transform = styles.buttonHover.transform)}
-                        >
-                            {label}
-                        </button>
-                    </li>
-                ))}
-            </ul>
-            <div style={styles.descriptionContainer}>
-                <span>{activeDescription || ""}</span>
-            </div>
-        </div>
+      <>
+            {!isDeckEditor ? (
+                <div style={styles.gameMenuContainer}>
+                    <ul style={styles.buttonSet}>
+                        {["ストーリー", "デッキ", "ガチャ", "設定", "ゲーム終了"].map((label, index) => (
+                            <li key={index} style={{flex: "1"}}>
+                                <button
+                                    style={{
+                                        ...styles.button,
+                                        ...(activeDescription === descriptions[label] ? styles.buttonHover : {}),
+                                    }}
+                                    onClick={label === "デッキ" ? deckEditorButton : undefined} // クリック時にデッキエディタを開く
+                                    onMouseOver={() => handleMouseOver(label)}
+                                    onMouseOut={handleMouseOut}
+                                    onMouseDown={(e) => (e.target.style.transform = styles.buttonHover.transform)}
+                                    onMouseUp={(e) => (e.target.style.transform = styles.buttonHover.transform)}
+                                >
+                                    {label}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                    <div style={styles.descriptionContainer}>
+                        <span>{activeDescription || ""}</span>
+                    </div>
+                </div>
+            ) : (
+                // デッキエディタが表示されるとき
+                <CardDeckEditor />
+            )}
+        </>
     );
 }
